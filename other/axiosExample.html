@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+   
+    <div id="app">
+        <input type="button" value="获取随机一条笑话" @click="getJoke" />
+        <p>{{joke}}</p>
+
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        /*document.querySelector(".get").onclick = function () {
+            axios.get("https://autumnfish.cn/api/joke/list?num=6")
+                .then(function (response) {
+                    for (var i = 0; i < response.data.jokes.length; i++) {
+                        console.log(response.data.jokes[i])
+                    }
+                });
+        }*/
+        var vue = new Vue({
+            el: '#app',
+            data: {
+                joke: '笑话啊'
+            },
+            methods: {
+                getJoke: function () {
+                    console.log('getjoke')
+                    var vueData = this;
+                    axios.get('https://autumnfish.cn/api/joke/')
+                        .then(
+                            function (response) {
+                              vueData.joke = response.data;
+                                
+                            },
+                            function (err) { consoel.log(err) });
+                }
+            }
+        });
+    </script>
+</body>
+</html>

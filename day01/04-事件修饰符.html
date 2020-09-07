@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+
+    <div id="app">
+
+        <!--<div id="inner" @click="inner_click" style="background-color:lightcyan">
+            <input type="button" value="btn" v-on:click.stop="btn_click" />
+
+        </div>-->
+        <!--<div id="inner" @click.self="inner_click" style="background-color:lightcyan">
+            <input type="button" value="btn" v-on:click.stop="btn_click" />
+
+        </div>-->
+        <!--<div id="inner" @click.once="inner_click" style="background-color:lightcyan">
+            <input type="button" value="btn" v-on:click.stop="btn_click" />
+
+        </div>-->
+
+        <div id="inner" @click="inner_click" style="background-color:lightcyan">
+            <input type="button" value="btn" v-on:click.once="btn_click" />
+        </div>
+        <ul v-for="item in decorate">
+            <li>{{item}}</li>
+        </ul>
+
+    </div>
+    <script src="/lib/vue.js" type="text/javascript"></script>
+    <script>
+        var vue = new Vue({
+            el: '#app',
+            data: {
+                decorate: [
+                    ".stop 阻止冒泡",
+                    ".prevent阻止默认事件",
+                    ".capture添加事件侦听器时使用事件捕获模式",
+                    ".self只当事件在该元素本身（比如不是子元素）触发时回调",
+                    ".once事件只触发一次（比如一个按钮，click.once 这个click只会触发一次）"
+                ]
+            },
+            methods: {
+                btn_click: function () {
+                    console.log("btn_click");
+                },
+                inner_click: function () {
+                    console.log("inner_click");
+                }
+            },
+        })
+
+    </script>
+</body>
+</html>

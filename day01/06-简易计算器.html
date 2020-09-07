@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="value1" />
+        <select v-model="operator">
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+        </select>
+        <input type="text" v-model="value2" />
+        <span>=</span>
+        <input type="text" v-model="result" />
+        <input type="button" value="计算" @click="calculate" />
+    </div>
+
+    <script src="/lib/vue.js" type="text/javascript"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                value1: 1,
+                value2: 2,
+                operator: '+',
+                result: 3
+            },
+            methods: {
+                calculate: function () {
+                    var v1 = (this.value1);
+                    var v2 = (this.value2);
+                    var oper = this.operator;
+                    switch (oper) {
+                        case '+':
+                            this.result = v1 + v2;
+                            break;
+                        case '-':
+                            this.result = v1 - v2;
+                            break;
+                        case '*':
+                            this.result = v1 * v2;
+                            break;
+                        case '/':
+                            this.result = v1 / v2;
+                            break;
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

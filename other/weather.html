@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="city" v-on:keyup.enter="getWeather" placeholder="请输入查询天气" />
+        <input  type="button" value="查询" v-on:click="getWeather"/>
+        <br />
+        <ul>
+            <li v-for="item in weatherList">
+                日期：{{item.date}},温度：{{item.daytemp}}
+            </li>
+        </ul>
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var vue = new Vue({
+            el: '#app',
+            data: {
+                city: '郑州',
+                weatherList: []
+            },
+            methods: {
+                getWeather: function () {
+                    var vueThis = this;
+                    axios.get('https://restapi.amap.com/v3/weather/weatherInfo?key=c45daf2976c647ffdaecc042c46af168&city=' + vueThis.city + '&extensions=all')
+                        .then(function (response) {
+                            vueThis.weatherList = response.data.forecasts[0].casts;
+                        })
+                        .catch(function (err) { console.log(err)})
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>
