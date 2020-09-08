@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        .red {
+            background-color: red;
+            width: 200px;
+            height: 300px
+        }
+
+        .border {
+            border: 5px solid black
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!--数组形式-->
+        <div :class="['red','border']">
+
+        </div>
+
+        <!-- 数组中嵌套对象 -->
+        <div :class="['red',{'border':isborder}]">
+            <input type="button" value="切换border" @click="toggleBorder" />
+        </div>
+
+        <!-- 对象形式 -->
+        <div :class="{'red':true,'border':true}">
+
+
+        </div>
+    </div>
+    <script src="/lib/vue.js" type="text/javascript"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                isborder: true
+            },
+            methods: {
+                toggleBorder: function () {
+                    this.isborder = !this.isborder;
+                }
+            }
+        })
+    </script>
+</body>
+</html>
