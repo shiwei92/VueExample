@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div id="app">
+        <P>{{msg | msgFormat}}</P>
+        <P>{{msg2 | msgFormat2('我说哪天就是哪天')}}</P>
+    </div>
+    <script src="/lib/vue.js"></script>
+    <script>
+        //过滤器只可用在插值表达式和v-bind表达式
+        //定义过滤器，需要在vm实例前
+        //第一个参数是过滤器的名称，第二个参数为函数，其中函数的参数是要被过滤的值
+        Vue.filter("msgFormat", function (msg) {
+            return msg.replace(/明天/g, '后天')
+        });
+        Vue.filter("msgFormat2", function (msg2, arg) {
+            return msg2.replace(/明天/g, arg)
+        });
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: '明天又是美好的一天，明天又是有希望的一天，明天又是值得期待的一天！',
+                msg2: '明天又是美好的一天，明天又是有希望的一天，明天又是值得期待的一天！',
+            }
+        });
+    </script>
+</body>
+</html>
