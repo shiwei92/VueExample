@@ -8,6 +8,9 @@
     <div id="app">
         <P>{{msg | msgFormat}}</P>
         <P>{{msg2 | msgFormat2('我说哪天就是哪天')}}</P>
+        <!-- 定义私有过滤器 ,如果公共过滤器和私有过滤器同名，以私有过滤器为准-->
+        <p>{{date | dateFormat}}</p>
+        <p></p>
     </div>
     <script src="/lib/vue.js"></script>
     <script>
@@ -25,6 +28,19 @@
             data: {
                 msg: '明天又是美好的一天，明天又是有希望的一天，明天又是值得期待的一天！',
                 msg2: '明天又是美好的一天，明天又是有希望的一天，明天又是值得期待的一天！',
+                date: new Date()
+            },
+            filters: {
+                dateFormat: function (date) {
+                    var d = new Date(date);
+                    var year = d.getFullYear();
+                    var month = d.getMonth() + 1;
+                    var date = d.getDate();
+                    var hour = d.getHours();
+                    var min = d.getMinutes();
+                    var second = d.getSeconds();
+                    return year + "-" + month + "-" + date + " " + hour + ":" + min + ":" + second;
+                }
             }
         });
     </script>

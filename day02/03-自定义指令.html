@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" placeholder="此文本框自动获取焦点" v-focus />
+    </div>
+    <script src="/lib/vue.js"></script>
+    <script>
+        //使用Vue.directive()定义全局指令
+        //参数1是指令的名称，在定义的时候指令名称不需要加v-前缀
+        //不过在调用的时候必须在指令名称前加v-前缀进行调用
+        //参数2是一个对象
+        Vue.directive('focus', {
+            inserted: function (el) {
+                el.focus();
+            }
+        });
+        var vue = new Vue({
+            el: '#app',
+            data: {
+
+            }
+        });
+    </script>
+</body>
+</html>

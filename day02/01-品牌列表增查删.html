@@ -9,7 +9,7 @@
     <div id="app">
         <div>
             <label>id：</label><input type="text" v-model="id" />
-            <label>name：</label><input type="text" v-model="name" />
+            <label>name：</label><input type="text" v-model="name" v-on:keyup.enter="add" />
             <input type="button" value="新增" v-on:click="add" />
             <input type="text" placeholder="enter name to search" v-model="keyWords" />
         </div>
@@ -34,7 +34,7 @@
                 <tr v-for="item in search(keyWords)" v-bind:key="item.id">
                     <td>{{item.id}}</td>
                     <td>{{item.name}}</td>
-                    <td>{{item.ctime}}</td>
+                    <td>{{item.ctime | dateFormat}}</td>
                     <td><a href="javascript:;" v-on:click="del(item.id)">删除</a></td>
                 </tr>
             </tbody>
@@ -44,6 +44,16 @@
     </div>
     <script src="/lib/vue.js"></script>
     <script>
+        Vue.filter('dateFormat', function (date) {
+            var d = new Date(date);
+            var year = d.getFullYear();
+            var month = d.getMonth() + 1;
+            var date = d.getDate();
+            var hour = d.getHours();
+            var min = d.getMinutes();
+            var second = d.getSeconds();
+            return year + "-" + month + "-" + date + " " + hour + ":" + min + ":" + second;
+        });
         var vm = new Vue({
             el: '#app',
             data: {
@@ -51,14 +61,14 @@
                 name: '',
                 keyWords: '',
                 list: [
-                    { id: 1, name: '奔驰', ctime: new Date().toLocaleString() },
-                    { id: 2, name: '奥迪', ctime: new Date().toLocaleString() },
-                    { id: 3, name: '宝马', ctime: new Date().toLocaleString() },
+                    { id: 1, name: '奔驰', ctime: new Date() },
+                    { id: 2, name: '奥迪', ctime: new Date() },
+                    { id: 3, name: '宝马', ctime: new Date() },
                 ],
             },
             methods: {
                 add: function () {
-                    var car = { id: this.id, name: this.name, ctime: new Date().toLocaleString() };
+                    var car = { id: this.id, name: this.name, ctime: new Date() };
                     this.list.push(car);
                 },
                 del: function (id) {
