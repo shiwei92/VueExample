@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <template id="template">
+        <div>
+            <h3>这是自定义的私有login组件</h3>
+        </div>
+    </template>
+    <div id="app">
+        <login></login>
+    </div>
+    <script src="/lib/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            components: {
+                login: {
+                    template: '#template'
+                }
+            }
+        });
+    </script>
+</body>
+</html>

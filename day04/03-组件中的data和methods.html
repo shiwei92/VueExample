@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div id="app">
+        <com1></com1>
+    </div>
+
+    <script src="/lib/vue.js"></script>
+    <script>
+        Vue.component('com1', {
+            template: '<h1>全局组件！{{msg}}</h1>',
+            data: function () {
+                return {
+                    msg:'这是组件中的data定义的数据！'
+                }
+            }
+        });
+        var vm = new Vue({
+            el: '#app',
+
+        });
+    </script>
+</body>
+</html>

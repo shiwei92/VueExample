@@ -6,7 +6,9 @@
 </head>
 <body>
     <div id="app">
-        <input type="text" placeholder="此文本框自动获取焦点" v-focus />
+        <input type="text" placeholder="此文本框自动获取焦点" v-focus v-color />
+        <input type="text" placeholder="自定颜色" v-my-color="'pink'" />
+        <span v-fontsize="'90'">{{date}}</span>
     </div>
     <script src="/lib/vue.js"></script>
     <script>
@@ -15,14 +17,37 @@
         //不过在调用的时候必须在指令名称前加v-前缀进行调用
         //参数2是一个对象
         Vue.directive('focus', {
+            //行为相关的操作，最好在inserted中执行，防止js行为不生效
             inserted: function (el) {
                 el.focus();
             }
         });
+
+        Vue.directive('color', {
+            //样式 只要通过指令绑定给了元素，不管这个元素有没有插入到页面中去，这个元素肯定有了一个内联的样式
+            //和样式相关的操作，一般都可以在bind中执行
+            bind: function (el) {
+                el.style.color = 'red'
+            }
+        });
+
+        Vue.directive('my-color', {
+            bind: function (el, binding) {
+                el.style.color = binding.value;
+            }
+        })
+
         var vue = new Vue({
             el: '#app',
             data: {
-
+                date: new Date().toLocaleString()
+            },
+            directives: {
+                'fontsize': {
+                    bind: function (el, binding) {
+                        el.style.fontsize = parseInt(binding.value) + "px";
+                    }
+                }
             }
         });
     </script>

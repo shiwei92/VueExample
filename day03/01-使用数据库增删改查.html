@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="/lib/bootstrap.css" rel="stylesheet" />
+    <style>
+        [v-cloak] {
+            display: none
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app">
+        <div class="panel">
+            <div class="panel-body form-inline">
+                <input type="text" v-model="name" class="form-control" />
+                <input type="button" value="新增" class="btn btn-primary" v-on:click="add" />
+            </div>
+        </div>
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>name</th>
+                    <th>ctime</th>
+                    <th>operate</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in list" :key="item.id" v-cloak>
+                    <td>{{item.id}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.ctime}}</td>
+                    <td><a href="javascript:;" @click="del(item.id)">删除</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="/lib/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                name: '',
+                list: [],
+
+            },
+            methods: {
+                getList: function () {
+                    var _this = this;
+                    getListFunc(_this);
+                },
+                add: function () {
+                    var _this = this;
+                    var data = { name: this.name };
+                    axios.post('http://www.liulongbin.top:3005/api/addproduct/', data).then(function () {
+
+                        _this.getList();
+
+                    }).catch(function (err) { console.log(err); });
+                },
+                del: function (id) {
+                    var _this = this;
+                    var data = { id: id };
+                    axios.get('http://www.liulongbin.top:3005/api/delproduct/:id=' + id).then(function () {
+                        console.log('del ok');
+                        _this.getList();
+                    }).catch(function (err) { console.log(err); })
+                }
+            },
+            created: function () {
+                var _this = this;
+                getListFunc(_this);
+            }
+        });
+        function getListFunc(_this) {
+            _this.list = [];
+            axios.get('http://www.liulongbin.top:3005/api/getprodlist/').then(function (response) {
+                for (var i = 0; i < response.data.message.length; i++) {
+                    _this.list.push(response.data.message[i]);
+                }
+            });
+        }
+
+            //此处代码是跨域演示，详见 WebApiExample项目
+            //axios.get('http://localhost:52743/api/user/Get')
+            //    .then(function (res) { console.log(res) })
+            //    .catch(function (err) { console.log(err) });
+    </script>
+</body>
+</html>
