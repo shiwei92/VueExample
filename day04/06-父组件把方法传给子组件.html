@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <template id="tmp1">
+        <div>
+            <h1>这是子组件{{msg}}</h1>
+            <ul v-for="item in list" :key="item.id">
+                <li>{{item.id}},{{item.name}}</li>
+            </ul>
+            <input v-on:click="myclick" value="子组件按钮，触发父组件方法" type="button" />
+        </div>
+    </template>
+    <div id="app">
+        <!-- 父组件向子组件传递方法，使用的是事件绑定机制 -->
+        <com2 v-on:func="show"></com2>
+
+    </div>
+    <script src="/lib/vue.js"></script>
+    <script>
+        var com2 = {
+            template: '#tmp1',
+            data: function () {
+                return {
+                    msg: 'son-message!!!',
+                    list: [
+                        { 'id': 1, 'name': 'jack1' },
+                        { 'id': 2, 'name': 'jack2' },
+                        { 'id': 3, 'name': 'jack3' },
+                        { 'id': 4, 'name': 'jack4' },
+                        { 'id': 5, 'name': 'jack5' },
+                    ],
+                }
+            },
+            methods: {
+                myclick: function () {
+                    console.log('ok');
+                    //this.$emit('func');
+                    //还可以向父组件中传参，直接在逗号后写上要传递的参数，如果有两个参数，就在后面继续加
+                    this.$emit('func', '传递的参数', this.msg);
+                }
+            }
+        };
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {
+                show: function (data, data2) {
+                    console.log("父组件show方法！" + data + "，" + data2);
+                }
+            },
+            components: {
+                com2: com2,
+            }
+        });
+    </script>
+</body>
+</html>

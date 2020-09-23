@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div id="app">
+        <h3 ref="id_h3">this is a h3</h3>
+        <input type="button" value="获取dom" v-on:click="getElement" />
+        <login ref="component_login"></login>
+    </div>
+    <script src="/lib/vue.js"></script>
+    <script>
+        var login = {
+            template: '<div><h1>this is a h1</h1></div>',
+            data: function () {
+                return {
+                    msg: 'son msg'
+                }
+            },
+            methods: {
+                loginFunc: function () {
+                    console.log('loginFunc')
+                }
+            }
+        };
+        var vm = new Vue({
+            el: '#app',
+            data: {
+
+            },
+            methods: {
+                getElement: function () {
+                    //ref获取dom节点
+                    console.log(this.$refs.id_h3.innerText);
+
+                    //ref获取组件data和方法。
+                    console.log(this.$refs.component_login.msg)
+                    this.$refs.component_login.loginFunc();
+                }
+            },
+            components: {
+                login
+            },
+        });
+    </script>
+</body>
+</html>
